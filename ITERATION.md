@@ -60,3 +60,18 @@ These concern the design↔CC transport only. Round 0/1 avoided them because the
 - **Q1-f (ready-to-pull signal — mid-edit race).** RCNX asset pages are live on every write (no draft/commit). CC pulling `loop-round-2-design` mid-edit would commit a half-written `DESIGN.md`. **Recommended lock:** one slug = one finalised delivery; CC pulls only on an explicit author go; corrections get a new slug, never a silent edit of the same page.
 - **Q1-g (repo-vs-asset authority — ratify).** Seed asserted base SHA `dd6b457`; actual was `ec35394` (Round 0, deviation 1). **Recommended lock:** the repo is ground truth for facts about the repo (SHAs, paths, merge state); the asset is authoritative for `DESIGN.md` content. On conflict CC trusts the repo for facts, commits content verbatim, and flags the mismatch here.
 - **Q1-h (minor ratifications).** (i) `design:` commits stay trailer-free and verbatim so the design surface can byte-diff asset vs commit; CC-authored commits carry trailers. (ii) Un-merged round branches are the design surface's review surface, so per-round `ITERATION.md` entries live on their branches until merge (Q1-e resolves consolidation).
+
+---
+
+## Round 1 – 2026-08-13 (design delivery committed to `main`)
+
+- Author go received. **Sign-offs recorded** (to be folded into DECISIONS at the next design commit): OQ5 accepted — the nine code `colour` values as-is (was Q1-a); OQ6 accepted — `Fraunces` / `IBM Plex Sans` / `IBM Plex Mono` (was Q1-b); OQ7 accepted — statute card stays code-neutral (was Q1-c).
+- **PR #1 merged to `main`** by author instruction (Amendment 2.2; design surface is read-only and cannot merge): merge commit `baa292f9e141d4035b157ac3aafd121a265054b9`. `design-plan/design-plan.md` and `design-plan/preview.html` are now on `main`.
+- **Design delivery ingested** from RCNX asset `ogmc/loop-round-1-design`, applying the Amendment 2.1 unescape (decode `lt gt quot #39` then `amp` last, single pass each). Post-unescape residual-entity scan: none.
+- **Committed to `main`** (both `design:`, trailer-free, byte-verbatim):
+  - `design: LOOP.md amendment 2 (transport locks)` — `0fef2e7e0b0c539bfaec818d08bc277fc0fabd86` (appended LOOP.md Amendment 2, five transport locks).
+  - `design: DESIGN.md round 1` — `897037ecd9c69deae2e4dcb64fd516d3636a0a43` (full replacement; DESIGN.md now Round 1, DECISIONS 9–13 added, OQ3/OQ4 closed, OQ5–OQ7 carried).
+- **Byte-diff confirmation:** committed `DESIGN.md` sha256 `be8dc2d2ec7acdcbfd56bf014a9f9503649052523212da7a7bf09806c05473c6` equals an independent unescape of the asset body (byte-identical). LOOP.md Amendment 2 appendix (post-unescape) sha256 `139a8cd39e286897e921dfc966b2b7911d358723970c0498525d891c56ca8dcf`. The design surface can verify by diffing both files on GitHub against the asset page post-unescape.
+- Deviations: none.
+- Answers: OQ5/OQ6/OQ7 accepted (above). **OQ1 and OQ2 remain OPEN** — placeholder `video_url` and `*.pages.dev` are NOT decided; the round-2 build will assume neither (no video embed committed as final; no deploy target wired).
+- Blocked: none. Round-2 build (deep-entry header, 1925 experiment page, possession-limits rule page) proceeds on branch `design/round-2` off `main`.
