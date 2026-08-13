@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OGMC design plan — preview</title>
+<!-- Preview only: web fonts loaded from Google Fonts so the author can judge
+     the real faces. The shipped site self-hosts these OFL fonts (no runtime CDN).
+     If offline, everything degrades to the fallback stacks below. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk:#F6F7F5; --ink:#1A1E1C; --board:#17211E; --paper:#F2F3EF;
+    --muted:#5C635F; --rule:#D7DAD4;
+    --soccer:#157F4C; --futsal:#0F766E; --canada:#0E7490; --gaelic:#1D6FB8;
+    --union:#3B4AA0; --sevens:#6D28D9; --afl:#A21F6E; --league:#C0223B; --gridiron:#97590F;
+    --display:'Fraunces', Georgia, 'Times New Roman', serif;
+    --body:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--chalk);color:var(--ink);font-family:var(--body);
+       line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:60rem;margin:0 auto;padding:2rem 1.25rem 5rem}
+  header.top{border-bottom:1px solid var(--rule);padding-bottom:1.5rem;margin-bottom:2.5rem}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;
+           font-size:.72rem;color:var(--muted)}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,6vw,3rem);
+     line-height:1.05;margin:.4rem 0 0}
+  h2{font-family:var(--display);font-weight:600;font-size:1.5rem;margin:3rem 0 1rem;
+     padding-top:1.5rem;border-top:1px solid var(--rule)}
+  p{margin:.6rem 0}
+  .note{color:var(--muted);font-size:.9rem}
+
+  /* palette */
+  .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.75rem}
+  .chip{border-radius:.5rem;overflow:hidden;border:1px solid var(--rule)}
+  .chip .fill{padding:.7rem .85rem;color:#fff;display:flex;justify-content:space-between;
+              align-items:baseline;gap:.5rem}
+  .chip .name{font-weight:600}
+  .chip .hex{font-family:var(--mono);font-size:.78rem;opacity:.92}
+  .chip .meta{padding:.5rem .85rem;font-family:var(--mono);font-size:.72rem;color:var(--muted);
+              background:var(--chalk);display:flex;justify-content:space-between}
+  .spine-demo{margin-top:.5rem}
+  .spine{height:4px;border-radius:2px}
+  .spine + .lbl{font-weight:600;margin-top:.35rem;display:inline-block}
+
+  /* type specimen */
+  .q{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,5vw,2.6rem);
+     line-height:1.08;margin:.5rem 0}
+  .specimen p{max-width:38rem}
+  .src{font-family:var(--mono);font-size:.72rem;color:var(--muted);
+       border:1px solid var(--rule);border-radius:.3rem;padding:.05rem .4rem}
+
+  /* statute card */
+  .statute{background:var(--paper);border:1px solid var(--rule);border-radius:.6rem;
+           padding:1.75rem 1.5rem;margin:1rem 0;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+  .statute .cite{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+  .codechip{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;
+            color:#fff;background:var(--soccer);padding:.15rem .45rem;border-radius:.25rem}
+  .cite .ref{font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;
+             font-size:.72rem;color:var(--muted)}
+  .statute .line{font-family:var(--display);font-weight:600;font-size:clamp(1.4rem,4vw,2rem);
+                 line-height:1.25;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+                 padding:1.1rem 0;margin:.4rem 0}
+  .swap .old{text-decoration:line-through;color:var(--muted);text-decoration-thickness:1px}
+  .swap .new{font-weight:900}
+  .statute .foot{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;
+                 font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+  .unverified{color:#8a5a00;border:1px solid #d8c08a;background:#fbf4e2;border-radius:.25rem;
+              padding:.05rem .45rem;text-transform:uppercase;letter-spacing:.08em;font-size:.66rem}
+
+  .board{background:var(--board);color:#fff;border-radius:.6rem;padding:1.25rem 1.25rem;margin-top:1rem}
+  .board .eyebrow{color:#9fb3ab}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">One Game, Many Codes · design plan · round 1 · for sign-off</div>
+    <h1>How do rules create games?</h1>
+    <p class="note">The three decisions every page depends on: the nine code colours, the type system, and the law-text treatment. Numbers below are recomputed in-page from the hexes.</p>
+  </header>
+
+  <h2>1 · The nine code colours</h2>
+  <p class="note">Chip = fill + white name (never colour alone). Ratios: white-on-fill / colour-as-text on the chalk surface. AA needs ≥ 4.5:1.</p>
+  <div class="chips" id="chips"></div>
+
+  <h2>2 · Typography</h2>
+  <div class="specimen">
+    <div class="eyebrow">Display — Fraunces (questions &amp; law quotes)</div>
+    <div class="q">Why did one line in the law book change football forever?</div>
+    <div class="eyebrow" style="margin-top:1.25rem">Body — IBM Plex Sans (long-form prose)</div>
+    <p>Six tackles made possession scarce. Scarce things get spent carefully — that is why league teams kick on the last. The rule proposed; the behaviour followed. Every page traces one such chain from a rule to something you can see on the pitch.</p>
+    <div class="eyebrow" style="margin-top:1.25rem">Apparatus — IBM Plex Mono (citations, markers, numerals)</div>
+    <p>Goals per game rose about a third in one season <span class="src">SRC · football-league-1925-26</span></p>
+  </div>
+
+  <h2>3 · The statute card</h2>
+  <p class="note">The signature element: a quoted law line as the hinge of the story. Code-neutral (ink on paper); the owning code is named by the small chip only. Never shows a fabricated quote — unverified until sourced.</p>
+  <div class="statute">
+    <div class="cite">
+      <span class="codechip">Soccer</span>
+      <span class="ref">Law 6 · The Football Association · 1925</span>
+    </div>
+    <div class="line swap">A player is offside unless <span class="old">three</span> <span class="new">two</span> of his opponents are nearer to their own goal-line than he is.</div>
+    <div class="foot">
+      <span>before → after: three defenders become two</span>
+      <span class="unverified">unverified · paraphrase</span>
+    </div>
+  </div>
+  <p class="note">Mock wording is a deliberate paraphrase marked <em>unverified</em>; real text comes from <code>sources/fa-minutes-1925.md</code> at the author's verification pass. Sign-off is on the treatment, not the words.</p>
+
+  <div class="board">
+    <div class="eyebrow">Chalkboard accent surface (law card context / episode hub)</div>
+    <div style="font-family:var(--display);font-size:1.4rem;margin-top:.3rem">On the dark surface, code identity is carried by chips, not hairlines.</div>
+  </div>
+</div>
+
+<script>
+// recompute WCAG contrast in-page so the palette claims are self-checking
+function lin(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}
+function L(hex){const h=hex.replace('#','');const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return 0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b);}
+function ratio(a,b){const la=L(a),lb=L(b),hi=Math.max(la,lb),lo=Math.min(la,lb);return (hi+0.05)/(lo+0.05);}
+const CHALK='#F6F7F5';
+const codes=[
+ ['Association football (soccer)','#157F4C'],['Futsal','#0F766E'],['Canadian football','#0E7490'],
+ ['Gaelic football','#1D6FB8'],['Rugby union','#3B4AA0'],['Rugby sevens','#6D28D9'],
+ ['Australian rules football','#A21F6E'],['Rugby league','#C0223B'],['American football','#97590F']];
+const el=document.getElementById('chips');
+for(const [name,hex] of codes){
+  const wf=ratio('#FFFFFF',hex).toFixed(2), tl=ratio(hex,CHALK).toFixed(2);
+  const d=document.createElement('div');d.className='chip';
+  d.innerHTML=`<div class="fill" style="background:${hex}"><span class="name">${name}</span><span class="hex">${hex}</span></div>`+
+    `<div class="meta"><span>chip ${wf}:1</span><span>text ${tl}:1</span></div>`+
+    `<div class="spine-demo" style="padding:.5rem .85rem;background:var(--chalk)"><div class="spine" style="background:${hex}"></div><span class="lbl">${name}</span></div>`;
+  el.appendChild(d);
+}
+</script>
+</body>
+</html>
