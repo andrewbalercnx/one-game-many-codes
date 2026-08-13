@@ -40,3 +40,11 @@ The design surface's GitHub connector is read-only on repo contents (`403 Resour
 - Remote: `andrewbalercnx/one-game-many-codes` (private).
 - Operative spec docs live under `docs/`.
 - Design-delivery surface: RCNX asset pages, namespace `ogmc`, slug prefix `loop-`.
+
+## Amendment 2 (2026-08-13) — transport locks
+
+1. **Ingest unescape (lossless rule).** Asset-page bodies arrive HTML-escaped, and the store also normalises entity text, so literal entity strings do NOT round-trip — delivered files must never contain them (name the character instead). On ingest of any `loop-round-N-design` page, CC decodes exactly five entities — those encoding the characters < > " ' & (entity names: lt, gt, quot, #39, amp) — single pass each, with amp decoded LAST to prevent double-decoding. Then commit. The design surface verifies by diffing the committed file on GitHub.
+2. **Branch/merge lifecycle.** On author sign-off, the accepted round PR merges to `main` (author merges in the GitHub UI, or explicitly instructs CC — the design surface is read-only and cannot merge). The next `DESIGN.md` publishes after merge; CC branches `design/round-(N+1)` from the updated `main`. `main` is the single accumulating truth and stays deployable.
+3. **Delivery finality.** One slug = one finalised delivery. CC pulls a design page only on an explicit author go. Corrections are a new slug, never a silent edit of an existing page.
+4. **Authority split.** The repo is ground truth for repo facts (SHAs, paths, merge state); the asset page is authoritative for delivered file content. On conflict, CC trusts the repo for facts, commits content verbatim, and flags the mismatch in `ITERATION.md`.
+5. **Commit hygiene.** `design:` commits are trailer-free and byte-verbatim (post-unescape) so the design surface can diff asset against commit; CC-authored commits carry standard trailers. Per-round `ITERATION.md` entries live on their round branch until merge.
