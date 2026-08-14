@@ -121,3 +121,26 @@ These concern the design↔CC transport only. Round 0/1 avoided them because the
 - Verification: existing round-2 lint still green after the batch — `Build OK — 3 pages`, unverified count now `27`. `dist/` unchanged (round-2 pages untouched).
 - Deviations: none. The Amendment 3 storage items (INDEX.md generation, provenance/ceiling lint additions) are round-3 build work per the amendment, not yet implemented on `main`; they land on `design/round-3`.
 - Next: branch `design/round-3` off `main`; round-3 scope per the round-2c CURRENT SPEC. Domain attachment to `manycodes.games` is NOT authorised (launch only).
+
+---
+
+## Round 3 – 2026-08-14 (build, increment 1: OQ10 checkpoint + claims channel)
+
+- Branch: `design/round-3` off `main` (`6fc119b`). PR against `main`, not merged.
+- **Scope of this increment.** OQ10 instructs the stub template be shown as a rendered example *before* stamping out all 22 stubs. So increment 1 delivers the template-first checkpoint plus the normative Amendment 3 storage; the rest of round 3 (below) follows OQ10 sign-off.
+- Done:
+  - **Base-URL config (DECISION 19):** `site.config.json` — single source of `base_url` (empty ⇒ relative links until the Pages preview). The build reads it; no absolute site URLs are hardcoded.
+  - **Claims channel storage (Amendment 3.1, normative):** the build now parses each source's `Ceiling: tier N` and `Status:` lines and regenerates **`content/INDEX.md`** every build — `id | lens | tier | verified | from -> to | source ids` per claim, `id | type | ceiling | status` per source (12 claims, 8 sources). New blocking lint rules: a claim citing a missing source id; a tier-1/tier-2 claim whose only sources are press-ceiling; `verified: true` on a claim whose `proposed_by` is not `author`. Prior lint retained.
+  - **OQ10 stub template:** `build_stub` renders question + one-paragraph promise + honest "coming" state + one onward prompt. One example rendered — `dist/stub-example.html` (the `rugby-union` code stub). The remaining 21 stubs are NOT stamped pending sign-off.
+  - **OQ9 manifesto placeholder:** `content/pages/manifesto.md` carries a clearly-marked `BEGIN-AUTHOR-COPY … END-AUTHOR-COPY` block — the author's copy goes in verbatim; I did not draft manifesto prose. `dist/index.html` is now the manifesto home: the placeholder banner + the episode-1 teaser ("Why did one football conquer the world?", weekly — DECISION 20) + a link into the skeleton. The round-2 pages remain buildable but are UNLINKED from the launch surface (DECISION 17e).
+- Deviations:
+  1. Round 3 is delivered in increments; increment 1 is the OQ10 checkpoint. **Deferred to increment 2+ (on sign-off):** the remaining 21 stubs, the Map tree view from the edge set, ~100 dated events, the edge set with confidence markers, the timeline index, dimension 13 "The ball" data, the Cloudflare Pages project + `*.pages.dev` preview + base-URL wiring + `gitignore dist/` (DECISION 18c/19), and OFL font vendoring (DECISION 18a).
+  2. `base_url` is empty (relative links) until the Pages preview URL exists.
+  3. Domain attachment to `manycodes.games` NOT performed — launch only, per author.
+- Answers / acceptance evidence:
+  - Build green — `Build OK — 4 pages`; `content/INDEX.md regenerated (12 claims, 8 sources)`; unverified count `28`.
+  - New lint blocks (negative tests, each aborted the build): `verified:true requires proposed_by author`; `cites missing source id 'does-not-exist-source'`; `tier-2 claim whose only sources are press-ceiling`.
+- Blocked / questions for the design surface:
+  - **OQ10 — sign off `dist/stub-example.html`** (the stub template) so I can stamp the remaining 21 stubs.
+  - The **three round-2 review notes** carried to round 3: please restate them on the branch (or confirm they are the already-tracked Q2-a font vendoring / Q2-b Python generator / Q2-c `dist/` items) so I address the intended ones.
+  - **Deploy (DECISION 19):** the Cloudflare Pages project needs Cloudflare access (the Cloudflare MCP currently requires authorisation). Should I stand up the Pages project once that's authorised, or will the author create it and hand me the `*.pages.dev` preview URL for the `base_url` value?
