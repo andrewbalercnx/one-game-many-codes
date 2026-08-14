@@ -104,3 +104,20 @@ These concern the design↔CC transport only. Round 0/1 avoided them because the
   - Q2-b: is the Python 3 + PyYAML generator acceptable, or is Node/an SSG preferred before the site grows?
   - Q2-c: keep committing generated `dist/` for review, or gitignore it once a preview deploy exists?
   - OQ1 and OQ2 remain author-owned and open; anchor/trail/search behaviours (MVP §5) and code/experiment page expansion are the natural round-3 scope.
+
+---
+
+## Round 2c – 2026-08-14 (design delivery + claims channel, committed to `main`)
+
+- Author go received. **PR #2 merged to `main`** (three review notes carried to round 3): merge commit `ad5e595bc51538f8ea57676919d5770807dbbf82`.
+- Consumed asset `ogmc/loop-round-2-design-c` (**supersedes `-design` and `-b`, which were ignored**), `ogmc/loop-amendment-3-claims-protocol`, and `ogmc/claims-batch-1`. All ingested with the Amendment 2.1 unescape; residual-entity scan clean on every file.
+- **Committed to `main`** (all `design:`, trailer-free, byte-verbatim), in the mandated order:
+  - `design: DESIGN.md round 2` — `b129b4b5dae4fa8ba51008799a45a7b14695d3b3`. DESIGN.md now Round 2 (GOAL redefined to a launchable framing site + full Stage-1 skeleton; DECISIONS 14–20; OQ5/6/7 resolved; OQ9/OQ10 open). sha256 `6a3916169a8f709b7709f982a9ce267125f2d923857c48f37abe2ff471d1ea98`.
+  - `design: content note — the ball dimension and episode 1` — `a3d7d17df39666ab5c1c6930fa5772a4c82405f2` (`docs/the-ball-and-episode-1.md`). sha256 `c8d750b24f505472f3694cfc58fdfb780051b2d802ac31362deada8f6413386c`.
+  - `design: LOOP.md amendment 3 (claims channel)` — `f5ba3c2d63ba3879cc7741ac94405a9ed9b3fae6`. Appended Amendment 3 (four clauses: ledger + INDEX + lint additions; batch transport; consumption; verification stays the author's). Appendix sha256 `f2864f8e43bc8858a5bf534084617ea07413de65791c2f8156e236f924b39456`.
+  - `design: claims batch 1 (7 claims, 4 sources)` — `04f4eb90dca7a988970ebbb25cb211421ed14e47`. **Batch 1 consumed.**
+- **Byte-diff confirmation:** each committed file's sha256 (above) equals an independent unescape of its asset body. Claims/sources contained no HTML entities, so verbatim equals post-unescape (confirmed by residual-entity scan). The design surface can verify by diffing on GitHub.
+- **Claims batch 1 file ids** — claims: `ball-shape-is-statute`, `kicked-ball-outruns-any-runner`, `sphere-rolls-true`, `oval-bounce-rewards-carrying`, `adoption-compounds`, `gaelic-control-case`, `american-ball-sharpened-post-1906`; sources: `ifab-law-2-the-ball` (law_text), `bolt-berlin-2009-splits` (match_data), `instep-kick-velocity-literature` (paper), `tfa-fastest-shots-2021` (press). All `verified: false`, `proposed_by: design`, `batch: 1`.
+- Verification: existing round-2 lint still green after the batch — `Build OK — 3 pages`, unverified count now `27`. `dist/` unchanged (round-2 pages untouched).
+- Deviations: none. The Amendment 3 storage items (INDEX.md generation, provenance/ceiling lint additions) are round-3 build work per the amendment, not yet implemented on `main`; they land on `design/round-3`.
+- Next: branch `design/round-3` off `main`; round-3 scope per the round-2c CURRENT SPEC. Domain attachment to `manycodes.games` is NOT authorised (launch only).
