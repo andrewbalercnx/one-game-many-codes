@@ -1,0 +1,4 @@
+{
+  "base_url": "",
+  "_note": "Single source of the site base URL (DESIGN.md DECISION 19). Empty string = relative links until the Cloudflare Pages *.pages.dev preview exists; then set to the preview URL, and to https://manycodes.games at launch. No absolute site URLs are hardcoded anywhere else; canonical tags, sitemap and prompt links derive from this value."
+}
