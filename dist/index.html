@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Game, Many Codes — One Game, Many Codes</title>
+<style>
+/* One Game, Many Codes — design system (round 2)
+   Palette, type and statute-card treatment per design-plan/design-plan.md (author sign-off:
+   OQ5/OQ6/OQ7). Fonts are named with fallback stacks; the OFL WOFF2 files are vendored in a
+   later round (no runtime CDN is used). */
+
+:root{
+  /* surfaces + neutrals */
+  --chalk:#F6F7F5; --ink:#1A1E1C; --board:#17211E; --paper:#F2F3EF;
+  --muted:#5C635F; --rule:#D7DAD4;
+  /* nine code colours (signed off) */
+  --c-soccer:#157F4C; --c-futsal:#0F766E; --c-canadian-football:#0E7490;
+  --c-gaelic-football:#1D6FB8; --c-rugby-union:#3B4AA0; --c-rugby-sevens:#6D28D9;
+  --c-australian-rules:#A21F6E; --c-rugby-league:#C0223B; --c-american-football:#97590F;
+  /* type */
+  --display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --body:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--chalk); color:var(--ink);
+  font-family:var(--body); line-height:1.6; font-size:1.02rem;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:44rem; margin:0 auto; padding:1.25rem 1.15rem 4rem }
+a{ color:inherit }
+:focus-visible{ outline:3px solid var(--c-rugby-union); outline-offset:2px; border-radius:2px }
+
+/* deep-entry header (every page self-orients) */
+.deep-header{ border-bottom:1px solid var(--rule); padding-bottom:1.1rem; margin-bottom:1.75rem }
+.deep-header .spine{ height:4px; width:3.5rem; border-radius:2px; background:var(--ink) }
+.deep-header .code-line{ display:flex; align-items:center; gap:.5rem; margin:.55rem 0 .2rem }
+.deep-header .code-name{ font-family:var(--mono); text-transform:uppercase; letter-spacing:.12em;
+  font-size:.72rem; color:var(--muted) }
+.deep-header h1{ font-family:var(--display); font-weight:900; line-height:1.06;
+  font-size:clamp(1.7rem,6vw,2.6rem); margin:.15rem 0 .5rem }
+.deep-header .site-link{ font-size:.85rem; color:var(--muted) }
+.deep-header .site-link a{ color:var(--muted); text-underline-offset:2px }
+
+h2{ font-family:var(--display); font-weight:600; font-size:1.4rem; line-height:1.15;
+  margin:2.2rem 0 .6rem }
+p{ margin:.7rem 0; max-width:38rem }
+.lede{ font-size:1.1rem }
+
+/* positions strip (rule page, colour-marked, name always shown) */
+.positions{ list-style:none; padding:0; margin:1.25rem 0; display:grid; gap:.5rem }
+.positions li{ border:1px solid var(--rule); border-radius:.5rem; overflow:hidden; background:#fff }
+.positions .head{ display:flex; align-items:center; gap:.5rem; padding:.5rem .7rem; color:#fff }
+.positions .code-name{ font-weight:600; font-size:.95rem }
+.positions .rule-text{ padding:.55rem .7rem .3rem; }
+.positions .law-ref{ padding:0 .7rem .55rem; font-family:var(--mono); font-size:.7rem; color:var(--muted) }
+
+/* statute card — the law-text signature treatment (code-neutral, ink on paper) */
+.statute{ background:var(--paper); border:1px solid var(--rule); border-radius:.6rem;
+  padding:1.5rem 1.25rem; margin:1.25rem 0; }
+.statute .cite{ display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; margin-bottom:.9rem }
+.statute .code-chip{ font-family:var(--mono); font-size:.64rem; text-transform:uppercase;
+  letter-spacing:.1em; color:#fff; padding:.15rem .45rem; border-radius:.25rem }
+.statute .ref{ font-family:var(--mono); text-transform:uppercase; letter-spacing:.11em;
+  font-size:.7rem; color:var(--muted) }
+.statute .line{ font-family:var(--display); font-weight:600; font-size:clamp(1.3rem,4.5vw,1.9rem);
+  line-height:1.28; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  padding:1rem 0; margin:.3rem 0 }
+.statute .foot{ display:flex; justify-content:space-between; align-items:center; gap:.75rem;
+  flex-wrap:wrap; margin-top:.9rem; font-family:var(--mono); font-size:.7rem; color:var(--muted) }
+.statute .unverified{ color:#8a5a00; border:1px solid #d8c08a; background:#fbf4e2;
+  border-radius:.25rem; padding:.05rem .45rem; text-transform:uppercase; letter-spacing:.07em;
+  font-size:.62rem; white-space:nowrap }
+
+/* onward prompts — the primary navigation, styled as the most inviting element */
+.prompts{ margin-top:2.5rem; border-top:1px solid var(--rule); padding-top:1.25rem }
+.prompts h2{ font-size:1rem; font-family:var(--mono); text-transform:uppercase;
+  letter-spacing:.12em; color:var(--muted); margin:0 0 .75rem }
+.prompt{ display:flex; align-items:center; gap:.6rem; text-decoration:none;
+  border:1px solid var(--rule); border-left-width:5px; border-radius:.5rem;
+  padding:.75rem .85rem; margin:.5rem 0; background:#fff; font-family:var(--display);
+  font-weight:600; font-size:1.05rem; line-height:1.2 }
+.prompt .arrow{ margin-left:auto; color:var(--muted); font-family:var(--body) }
+.prompt:hover{ background:#fbfcfb }
+
+.pagefoot{ margin-top:3rem; padding-top:1rem; border-top:1px solid var(--rule);
+  font-size:.8rem; color:var(--muted) }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="deep-header">
+  <div class="spine" style="background:#1A1E1C"></div>
+  <div class="code-line"><span class="code-name">Placeholder landing</span></div>
+  <h1>One Game, Many Codes</h1>
+  <div class="site-link">Small rule changes create entirely different games.</div>
+</header>
+<p class="lede">A vertical slice. The full front door, the Map and the code pages come in later rounds; for now, two pages carry the idea end to end.</p>
+<nav class="prompts"><h2>Start here</h2>
+<a class="prompt" href="1925-offside-two-defenders.html" style="border-left-color:#157F4C"><span>How did one line in the law book change football?</span><span class="arrow">&rarr;</span></a>
+<a class="prompt" href="possession-limits.html" style="border-left-color:#1A1E1C"><span>How long do you get to keep the ball?</span><span class="arrow">&rarr;</span></a>
+</nav>
+<footer class="pagefoot">One Game, Many Codes — a work in progress. British English throughout.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How long do you get to keep the ball? — One Game, Many Codes</title>
+<style>
+/* One Game, Many Codes — design system (round 2)
+   Palette, type and statute-card treatment per design-plan/design-plan.md (author sign-off:
+   OQ5/OQ6/OQ7). Fonts are named with fallback stacks; the OFL WOFF2 files are vendored in a
+   later round (no runtime CDN is used). */
+
+:root{
+  /* surfaces + neutrals */
+  --chalk:#F6F7F5; --ink:#1A1E1C; --board:#17211E; --paper:#F2F3EF;
+  --muted:#5C635F; --rule:#D7DAD4;
+  /* nine code colours (signed off) */
+  --c-soccer:#157F4C; --c-futsal:#0F766E; --c-canadian-football:#0E7490;
+  --c-gaelic-football:#1D6FB8; --c-rugby-union:#3B4AA0; --c-rugby-sevens:#6D28D9;
+  --c-australian-rules:#A21F6E; --c-rugby-league:#C0223B; --c-american-football:#97590F;
+  /* type */
+  --display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --body:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--chalk); color:var(--ink);
+  font-family:var(--body); line-height:1.6; font-size:1.02rem;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:44rem; margin:0 auto; padding:1.25rem 1.15rem 4rem }
+a{ color:inherit }
+:focus-visible{ outline:3px solid var(--c-rugby-union); outline-offset:2px; border-radius:2px }
+
+/* deep-entry header (every page self-orients) */
+.deep-header{ border-bottom:1px solid var(--rule); padding-bottom:1.1rem; margin-bottom:1.75rem }
+.deep-header .spine{ height:4px; width:3.5rem; border-radius:2px; background:var(--ink) }
+.deep-header .code-line{ display:flex; align-items:center; gap:.5rem; margin:.55rem 0 .2rem }
+.deep-header .code-name{ font-family:var(--mono); text-transform:uppercase; letter-spacing:.12em;
+  font-size:.72rem; color:var(--muted) }
+.deep-header h1{ font-family:var(--display); font-weight:900; line-height:1.06;
+  font-size:clamp(1.7rem,6vw,2.6rem); margin:.15rem 0 .5rem }
+.deep-header .site-link{ font-size:.85rem; color:var(--muted) }
+.deep-header .site-link a{ color:var(--muted); text-underline-offset:2px }
+
+h2{ font-family:var(--display); font-weight:600; font-size:1.4rem; line-height:1.15;
+  margin:2.2rem 0 .6rem }
+p{ margin:.7rem 0; max-width:38rem }
+.lede{ font-size:1.1rem }
+
+/* positions strip (rule page, colour-marked, name always shown) */
+.positions{ list-style:none; padding:0; margin:1.25rem 0; display:grid; gap:.5rem }
+.positions li{ border:1px solid var(--rule); border-radius:.5rem; overflow:hidden; background:#fff }
+.positions .head{ display:flex; align-items:center; gap:.5rem; padding:.5rem .7rem; color:#fff }
+.positions .code-name{ font-weight:600; font-size:.95rem }
+.positions .rule-text{ padding:.55rem .7rem .3rem; }
+.positions .law-ref{ padding:0 .7rem .55rem; font-family:var(--mono); font-size:.7rem; color:var(--muted) }
+
+/* statute card — the law-text signature treatment (code-neutral, ink on paper) */
+.statute{ background:var(--paper); border:1px solid var(--rule); border-radius:.6rem;
+  padding:1.5rem 1.25rem; margin:1.25rem 0; }
+.statute .cite{ display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; margin-bottom:.9rem }
+.statute .code-chip{ font-family:var(--mono); font-size:.64rem; text-transform:uppercase;
+  letter-spacing:.1em; color:#fff; padding:.15rem .45rem; border-radius:.25rem }
+.statute .ref{ font-family:var(--mono); text-transform:uppercase; letter-spacing:.11em;
+  font-size:.7rem; color:var(--muted) }
+.statute .line{ font-family:var(--display); font-weight:600; font-size:clamp(1.3rem,4.5vw,1.9rem);
+  line-height:1.28; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  padding:1rem 0; margin:.3rem 0 }
+.statute .foot{ display:flex; justify-content:space-between; align-items:center; gap:.75rem;
+  flex-wrap:wrap; margin-top:.9rem; font-family:var(--mono); font-size:.7rem; color:var(--muted) }
+.statute .unverified{ color:#8a5a00; border:1px solid #d8c08a; background:#fbf4e2;
+  border-radius:.25rem; padding:.05rem .45rem; text-transform:uppercase; letter-spacing:.07em;
+  font-size:.62rem; white-space:nowrap }
+
+/* onward prompts — the primary navigation, styled as the most inviting element */
+.prompts{ margin-top:2.5rem; border-top:1px solid var(--rule); padding-top:1.25rem }
+.prompts h2{ font-size:1rem; font-family:var(--mono); text-transform:uppercase;
+  letter-spacing:.12em; color:var(--muted); margin:0 0 .75rem }
+.prompt{ display:flex; align-items:center; gap:.6rem; text-decoration:none;
+  border:1px solid var(--rule); border-left-width:5px; border-radius:.5rem;
+  padding:.75rem .85rem; margin:.5rem 0; background:#fff; font-family:var(--display);
+  font-weight:600; font-size:1.05rem; line-height:1.2 }
+.prompt .arrow{ margin-left:auto; color:var(--muted); font-family:var(--body) }
+.prompt:hover{ background:#fbfcfb }
+
+.pagefoot{ margin-top:3rem; padding-top:1rem; border-top:1px solid var(--rule);
+  font-size:.8rem; color:var(--muted) }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="deep-header">
+  <div class="spine" style="background:#1A1E1C"></div>
+  <div class="code-line"><span class="code-name">A rule across the codes</span></div>
+  <h1>How long do you get to keep the ball?</h1>
+  <div class="site-link">part of <a href="index.html">One Game, Many Codes</a></div>
+</header>
+<ul class="positions">
+<li><div class="head" style="background:#157F4C"><span class="code-name">Association football</span></div><div class="rule-text">No limit. You keep the ball until the other side takes it.</div><div class="law-ref">Laws of the Game (IFAB)</div></li>
+<li><div class="head" style="background:#3B4AA0"><span class="code-name">Rugby union</span></div><div class="rule-text">No set count. Possession is contested afresh at every tackle, ruck and maul.</div><div class="law-ref">World Rugby Laws</div></li>
+<li><div class="head" style="background:#C0223B"><span class="code-name">Rugby league</span></div><div class="rule-text">Six tackles, then a handover (four from 1966; six from 1972).</div><div class="law-ref">RFL Laws</div></li>
+<li><div class="head" style="background:#97590F"><span class="code-name">American football</span></div><div class="rule-text">Four downs to make ten yards, or the ball changes hands.</div><div class="law-ref">NFL Rules</div></li>
+<li><div class="head" style="background:#0E7490"><span class="code-name">Canadian football</span></div><div class="rule-text">Three downs to make ten yards, or the ball changes hands.</div><div class="law-ref">CFL Rules</div></li>
+<li><div class="head" style="background:#A21F6E"><span class="code-name">Australian rules football</span></div><div class="rule-text">No limit. A continuous contest for the ball.</div><div class="law-ref">AFL Laws</div></li>
+</ul>
+<p>Every code has to answer one question before anything else about it makes sense:
+once you have the ball, how long is it yours? The answers split the family in two —
+codes that never count possession, and codes that put a number on it.</p>
+<h2 id="why-it-was-introduced">Why it was introduced</h2>
+<p>Left unlimited, possession rewards holding on. In rugby league before 1966 that produced
+strangulation football: a side could keep the ball almost indefinitely, and did. The
+limited-tackle rule put a number on possession for the first time — and a number changes
+how a thing is spent.</p>
+<h2 id="on-the-pitch">On the pitch</h2>
+<p>Six tackles made possession scarce. Scarce things get spent carefully — that is why
+league teams kick on the last. The gridiron codes reached the same idea by a different
+route: a fixed count of downs to make the distance turned each possession into a
+sequence of planned, discrete plays, with Canadian football's three downs forcing the
+issue a down sooner than the American four. Where the count is absent — soccer, union,
+Australian rules — possession is kept until it is lost, and the game flows without a
+built-in reset.</p>
+<h2 id="in-the-stands">In the stands</h2>
+<p>A number you can see becomes a countdown. As the last tackle nears, everyone watching
+knows the ball is about to change hands, and the tension climbs toward that moment —
+a suspense the uncounted codes never manufacture in quite the same way.</p>
+<h2 id="adoption-and-rejection">Adoption and rejection</h2>
+<p>Soccer never counted possession and shows no sign of starting. Union kept the contest
+open at the breakdown rather than capping it. The gridiron codes made the count spatial —
+yards to be gained — rather than a tally of tackles. One idea, a finite possession,
+arrived at independently and expressed four different ways.</p>
+<nav class="prompts"><h2>Where next</h2>
+<a class="prompt" href="1925-offside-two-defenders.html" style="border-left-color:#157F4C"><span>Where did one line about offside send an entire game?</span><span class="arrow">&rarr;</span></a>
+<a class="prompt" href="#on-the-pitch" style="border-left-color:#1A1E1C"><span>Why do league teams kick on the last tackle?</span><span class="arrow">&rarr;</span></a></nav>
+<footer class="pagefoot">One Game, Many Codes — a work in progress. British English throughout.</footer>
+</div>
+</body>
+</html>
